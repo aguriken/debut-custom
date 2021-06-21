@@ -2,19 +2,17 @@
 
   <div {% if cart.item_count == 0 %}class="hide" {% endif %}data-cart-wrapper>
     <div class="cart-header">
-      <h1 class="cart-header__title">{{ 'cart.general.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="text-link text-link--accent">
-        {{ 'cart.general.continue_shopping' | t }}
-      </a>
+      <h1 class="cart-header__title">{{ 'cart.general.title' | t | upcase }}</h1>
     </div>
 
     <form action="{{ routes.cart_url }}" method="post" novalidate class="cart">
       <table>
         <thead class="cart__row cart__row--heading">
           <th scope="col">{{ 'cart.label.product' | t }}</th>
-          <th class="text-right" scope="col">{{ 'cart.label.price' | t }}</th>
-          <th class="text-right small--hide" scope="col">{{ 'cart.label.quantity' | t }}</th>
-          <th class="text-right small--hide" scope="col">{{ 'cart.label.total' | t }}</th>
+          <th scope="col">{{ 'cart.label.price' | t }}</th>
+          <th class="small--hide" scope="col">{{ 'cart.label.quantity' | t }}</th>
+          <th class="small--hide" scope="col">{{ 'cart.label.total' | t }}</th>
+          <th></th>
         </thead>
         <tbody data-cart-line-items>
           {%- for item in cart.items -%}
@@ -84,14 +82,10 @@
                         </li>
                       {%- endfor -%}
                     </ul>
-
-                    <p class="cart__remove">
-                      <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="text-link text-link--accent" aria-label="{{ 'cart.label.remove' | t: product: item.title }}" data-cart-remove data-role="product-remove">{{ 'cart.general.remove' | t }}</a>
-                    </p>
                   </div>
                 </div>
               </td>
-              <td class="cart__price text-right">
+              <td class="cart__price">
 
                 {%- assign hasDiscount = false -%}
                 {%- if item.original_price != item.final_price -%}
@@ -186,7 +180,7 @@
                   <span class="cart__qty-error-message" data-cart-quantity-error-message></span>
                 </div>
               </td>
-              <td class="cart__quantity-td text-right small--hide">
+              <td class="cart__quantity-td small--hide">
                 <div class="cart__qty">
                   <label for="updates_large_{{ item.key }}" class="cart__qty-label" data-quantity-label-desktop>{{ 'cart.label.quantity' | t }}</label>
                   <input id="updates_large_{{ item.key }}" class="cart__qty-input" type="number"
@@ -199,7 +193,7 @@
                   <span class="cart__qty-error-message" data-cart-quantity-error-message></span>
                 </div>
               </td>
-              <td class="cart__final-price text-right small--hide" data-cart-item-line-price>
+              <td class="cart__final-price small--hide" data-cart-item-line-price>
                 {%- comment -%}
                   Markup template for discount item
                 {%- endcomment -%}
@@ -225,10 +219,21 @@
                   <span data-cart-item-regular-price>{{ item.original_line_price | money }}</span>
                 </div>
               </td>
+              <td>
+                <p class="cart__remove">
+                  <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="text-link" aria-label="{{ 'cart.label.remove' | t: product: item.title }}" data-cart-remove data-role="product-remove">
+                    <span class="batsu">×</span>
+                  </a>
+                </p>
+              </td>
             </tr>
           {%- endfor -%}
         </tbody>
       </table>
+
+      <a href="{{ routes.all_products_collection_url }}" class="text-link text-link-button">
+        {{ 'cart.general.continue_shopping' | t | upcase }}
+      </a>
 
       <div class="cart__footer">
         <div class="grid">
@@ -317,7 +322,37 @@
   </div>
 </div>
 
-
+<style>
+  .cart th {
+    font-style: italic;
+  }
+  .text-link-button {
+    padding: 7px 30px;
+    border: 1px solid black;
+    font-size: 11px;
+  }
+  @media screen and (max-width: 749px) {
+    .text-link-button {
+      display: block;
+      width: 200px;
+      margin: 0 auto;
+      text-align: center;
+    }
+  }
+  .cart__remove {
+    margin-top: 0;
+  }
+  .cart__price {
+    text-align: left;
+  }
+  .cart__submit {
+    padding: 12px 42px;
+    font-style: italic;
+  }
+  .batsu {
+    text-decoration: none;
+  }
+</style>
 
 {% schema %}
 {

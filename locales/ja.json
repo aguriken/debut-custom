@@ -318,7 +318,7 @@
       "success": "パスワードを更新するためのメールを送信しました。"
     },
     "reset_password": {
-      "title": "アカウントのパスワードをリセットする",
+      "title": "パスワードをリセットする",
       "subtext": "{{ email }}の新しいパスワードを入力してください",
       "password": "パスワード",
       "password_confirm": "パスワードの確認",
@@ -330,7 +330,8 @@
       "last_name": "姓",
       "email": "メールアドレス",
       "password": "パスワード",
-      "submit": "作成する"
+      "password_confirmation": "パスワード(確認)",
+      "submit": "アカウント作成"
     }
   },
   "homepage": {

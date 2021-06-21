@@ -19,7 +19,6 @@
             </div>
           {%- endif -%}
 
-          <label for="CustomerEmail">{{ 'customer.login.email' | t }}</label>
           <input
             type="email"
             name="customer[email]"
@@ -27,6 +26,7 @@
             autocomplete="email"
             autocorrect="off"
             autocapitalize="off"
+            placeholder="{{ 'customer.login.email' | t }}"
             {%- if form.errors contains 'form' -%}
               class="input--error"
               aria-invalid="true"
@@ -34,12 +34,12 @@
             >
 
           {% if form.password_needed %}
-            <label for="CustomerPassword">{{ 'customer.login.password' | t }}</label>
             <input
               type="password"
               value=""
               name="customer[password]"
               id="CustomerPassword"
+              placeholder="{{ 'customer.login.password' | t }}"
               {%- if form.errors contains 'form' -%}
                 class="input--error"
                 aria-invalid="true"
@@ -66,7 +66,7 @@
 
         <div class="text-center">
           <h2 id="RecoverHeading">{{ 'customer.recover_password.title' | t }}</h2>
-          <p>{{ 'customer.recover_password.subtext' | t }}</p>
+          <p class="RecoverHeading-msg">{{ 'customer.recover_password.subtext' | t }}</p>
         </div>
 
         <div class="form-vertical">
@@ -79,10 +79,10 @@
               <span class="hide reset-password-success"></span>
             {% endif %}
 
-            <label for="RecoverEmail">{{ 'customer.recover_password.email' | t }}</label>
             <input
               type="email"
               value=""
+              placeholder="{{ 'customer.recover_password.email' | t }}"
               name="email"
               id="RecoverEmail"
               class="input-full{% if form.errors %} input--error{% endif %}"
@@ -131,3 +131,40 @@
 
   </div>
 </div>
+
+<style>
+#LoginHeading {
+  margin-bottom: 50px;
+}
+input#CustomerEmail,
+input#CustomerPassword,
+input#RecoverEmail {
+  padding: 16px 18px;
+  border: 3px solid var(--color-border-form);
+}
+a#RecoverPassword {
+  font-size: 16px;
+}
+input.btn {
+  display: block !important;
+  width: 90% !important;
+  padding: 22px 18px;
+  margin: 0 auto 25px;
+  letter-spacing: 0.3em;
+}
+a#customer_register_link {
+  text-decoration: underline;
+  font-size: 18px;
+  letter-spacing: 0.3em;
+}
+.RecoverHeading-msg {
+  margin-bottom: 15px !important;
+}
+@media screen and (max-width: 749px) {
+  #CustomerLoginForm,
+  #RecoverPasswordForm {
+    margin: 0 auto;
+    max-width: 350px;
+  }
+}
+</style>
